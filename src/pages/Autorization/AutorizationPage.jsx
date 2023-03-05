@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { AutorizationContainer, StyledForm } from './AutorizationPage.styled';
 import { userLogin, userRegister } from 'store/authReducer/authOperations';
 import { getContacts } from 'store/contactsReducer/contactsOperations';
-import { loginError, registerError } from 'errors/exeptions';
 
 const AutorizationPage = ({ isLogin }) => {
   const { register, handleSubmit, reset } = useForm();
@@ -21,8 +20,7 @@ const AutorizationPage = ({ isLogin }) => {
       case true:
         dispatch(userLogin(credential))
           .unwrap()
-          .then(() => dispatch(getContacts()))
-          .catch(() => loginError());
+          .then(() => dispatch(getContacts()));
         return 1;
       default:
         const { email, password } = credential;
@@ -32,8 +30,7 @@ const AutorizationPage = ({ isLogin }) => {
             dispatch(userLogin({ email, password }))
               .unwrap()
               .then(() => dispatch(getContacts()));
-          })
-          .catch(() => registerError());
+          });
         reset();
         return;
     }

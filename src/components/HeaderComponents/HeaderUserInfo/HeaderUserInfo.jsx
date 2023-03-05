@@ -4,7 +4,7 @@ import user from '../../../images/sprite.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { select } from 'store/selectors/selectors';
 import swal from 'sweetalert';
-import { logOut } from 'store/authReducer/authSlice';
+import { userLogout } from 'store/authReducer/authOperations';
 
 const HeaderUserInfo = () => {
   const userName = useSelector(select.userName);
@@ -23,7 +23,7 @@ const HeaderUserInfo = () => {
         swal('Successfully', {
           icon: 'success',
         });
-        dispatch(logOut());
+        dispatch(userLogout());
       }
     });
   };

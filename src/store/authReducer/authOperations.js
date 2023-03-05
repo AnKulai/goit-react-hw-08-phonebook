@@ -1,7 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { login, register } from 'service/authAPI';
+import {
+  loginErrorSwal,
+  registerErrorSwal,
+} from 'components/swal/error/errorSwal';
+import { successLoginSwal } from 'components/swal/success/successSwal';
+import { login, logout, register } from 'service/authAPI';
 import { token } from 'service/hosts';
-import swal from 'sweetalert';
 
 export const userRegister = createAsyncThunk(
   `user/userRegister`,
@@ -10,6 +14,7 @@ export const userRegister = createAsyncThunk(
       const response = await register(credential);
       return response;
     } catch (error) {
+      registerErrorSwal();
       return rejectWithValue(error.message);
     }
   }
@@ -21,12 +26,20 @@ export const userLogin = createAsyncThunk(
     try {
       const response = await login(credential);
       token.set(response.token);
-      swal({
-        title: 'Successful authorization!',
-        text: `Hi, ${response.user.name}. Nice to meet you!`,
-        icon: 'success',
-        button: 'Continue!',
-      });
+      successLoginSwal(response.user.name);
+      return response;
+    } catch (error) {
+      loginErrorSwal();
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const userLogout = createAsyncThunk(
+  `user/userLogout`,
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await logout();
       return response;
     } catch (error) {
       return rejectWithValue(error.message);

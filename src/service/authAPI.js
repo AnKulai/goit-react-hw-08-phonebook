@@ -10,6 +10,11 @@ export const login = async credential => {
   return data;
 };
 
+export const logout = async () => {
+  const { data } = await $privateHost.post('/users/logout');
+  return data;
+};
+
 export const getCurrentUser = async credential => {
   const { data } = await $privateHost.post('/users/current', credential);
   return data;
