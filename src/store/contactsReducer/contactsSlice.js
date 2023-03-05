@@ -2,12 +2,26 @@ import { createSlice } from '@reduxjs/toolkit';
 import { addContact, getContacts, removeContact } from './contactsOperations';
 
 export const contactsSlice = createSlice({
-  
   name: 'contacts',
   initialState: {
     items: [],
+    changeMode: {
+      isActive: false,
+      id: null,
+    },
     isLoading: false,
     error: null,
+  },
+
+  reducers: {
+    activeChangeMode: (state, action) => {
+      state.changeMode.isActive = true;
+      state.changeMode.id = action.payload;
+    },
+    disactiveChangeMode: (state) => {
+      state.changeMode.isActive = false;
+      state.changeMode.id = null;
+    },
   },
 
   extraReducers: builder =>
@@ -33,7 +47,6 @@ export const contactsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(removeContact.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
         state.items = state.items.filter(
           contact => contact.id !== action.payload.id
@@ -50,7 +63,6 @@ export const contactsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(addContact.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
         state.items = [...state.items, action.payload];
       })
@@ -61,4 +73,5 @@ export const contactsSlice = createSlice({
 });
 
 const contactsReducer = contactsSlice.reducer;
+export const { activeChangeMode, disactiveChangeMode } = contactsSlice.actions;
 export default contactsReducer;

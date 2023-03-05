@@ -7,7 +7,6 @@ import css from './Phonebook.module.scss';
 
 import { select } from 'store/selectors/selectors';
 import { addContact } from 'store/contactsReducer/contactsOperations';
-import { $privateHost } from 'service/hosts';
 
 const Phonebook = () => {
   const contacts = useSelector(select.contacts);
@@ -17,7 +16,6 @@ const Phonebook = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log($privateHost.defaults.headers.Authorization);
     const newContact = {
       name: inputNameRef.current.value,
       number: inputTelRef.current.value,

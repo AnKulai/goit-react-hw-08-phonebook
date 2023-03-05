@@ -5,6 +5,9 @@ const select = {
   isLoading: state => state.contacts.isLoading,
   error: state => state.contacts.error,
   filter: state => state.filter.filter,
+  changeModeIsActive: state => state.contacts.changeMode.isActive,
+  changeModeId: state => state.contacts.changeMode.id,
+  changeMode: state => state.contacts.changeMode,
   token: state => state.auth.token,
   authComlete: state => state.auth.authComlete,
   userName: state => state.auth.userName,
@@ -13,8 +16,9 @@ const select = {
 
 const reselect = {
   contactsByFilter: createSelector(
-    [select.contacts, select.filter], // Arguments
+    [select.contacts, select.filter, select.changeModeIsActive], // Arguments
     (contacts, filter) => {
+      
       if (filter !== '') {
         return contacts.filter(
           contact => contact.name.toLowerCase().trim().includes(filter) // Return filter array

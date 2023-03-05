@@ -1,6 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { removeContact } from 'store/contactsReducer/contactsOperations';
+import { activeChangeMode } from 'store/contactsReducer/contactsSlice';
 import { StyledLi } from './Contact.styled';
 
 const Contact = ({ id, name, phone, index }) => {
@@ -10,6 +11,10 @@ const Contact = ({ id, name, phone, index }) => {
     dispatch(removeContact(id));
   };
 
+  const handleActiveChangeMode = id => {
+    dispatch(activeChangeMode(id));
+  };
+
   return (
     <StyledLi>
       <span>{index}</span>
@@ -17,6 +22,9 @@ const Contact = ({ id, name, phone, index }) => {
       <span>{phone}</span>
       <button data-nanoid={id} onClick={() => handleRemove(id)}>
         Remove
+      </button>
+      <button data-nanoid={id} onClick={() => handleActiveChangeMode(id)}>
+        Edit
       </button>
     </StyledLi>
   );

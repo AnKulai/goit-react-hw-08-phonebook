@@ -26,3 +26,12 @@ export const postContact = async contact => {
     console.error(err);
   }
 };
+
+export const patchContact = async (id, contact) => {
+  try {
+    const { data } = await $privateHost.patch(`/contacts/${id}`, contact);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};

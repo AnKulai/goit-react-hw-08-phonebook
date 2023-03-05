@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import { reselect, select } from 'store/selectors/selectors';
 import Loader from 'components/Loader/Loader';
 import { ContactContainer, StyledContactList } from './ContactList.styled';
+import ChangeContact from '../ChangeContact/ChangeContact';
 
 const ContactList = () => {
   const contacts = useSelector(reselect.contactsByFilter);
+  const changeModeIsActive = useSelector(select.changeModeIsActive);
   const isLoading = useSelector(select.isLoading);
 
   // Default loading contacts from mockAPI
@@ -29,6 +31,7 @@ const ContactList = () => {
       ) : (
         <h1>Sorry... No contacts found matching search criteria...</h1>
       )}
+      {changeModeIsActive && <ChangeContact />}
     </ContactContainer>
   );
 };
