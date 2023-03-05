@@ -5,6 +5,10 @@ const select = {
   isLoading: state => state.contacts.isLoading,
   error: state => state.contacts.error,
   filter: state => state.filter.filter,
+  token: state => state.auth.token,
+  authComlete: state => state.auth.authComlete,
+  userName: state => state.auth.userName,
+  userEmail: state => state.auth.userEmail,
 };
 
 const reselect = {
@@ -17,6 +21,18 @@ const reselect = {
         );
       }
       return contacts; // Return defaul array
+    }
+  ),
+
+  // Check authentication completed
+
+  authenticationComplete: createSelector(
+    [select.token, select.authComlete],
+    (token, authComlete) => {
+      if (token === null) {
+        return authComlete === false;
+      }
+      return (authComlete = true);
     }
   ),
 };

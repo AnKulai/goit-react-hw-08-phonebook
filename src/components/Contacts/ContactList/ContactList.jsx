@@ -1,41 +1,35 @@
-import Contact from 'components/Contact/Contact';
-import css from './ContactList.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getContacts } from 'store/contactsReducer/contactsOperations';
+import Contact from 'components/Contacts/Contact/Contact';
+import { useSelector } from 'react-redux';
 import { reselect, select } from 'store/selectors/selectors';
 import Loader from 'components/Loader/Loader';
+import { ContactContainer, StyledContactList } from './ContactList.styled';
 
 const ContactList = () => {
   const contacts = useSelector(reselect.contactsByFilter);
   const isLoading = useSelector(select.isLoading);
-  const dispatch = useDispatch();
 
   // Default loading contacts from mockAPI
 
-  useEffect(() => {
-    dispatch(getContacts());
-  }, [dispatch]);
-
   return (
-    <>
+    <ContactContainer>
+      <h2>Contacts</h2>
       {contacts.length ? (
-        <ol className={css.contactList}>
+        <StyledContactList>
           {isLoading && <Loader />}
           {contacts.map((contact, index) => (
             <Contact
               key={contact.id}
               id={contact.id}
               name={contact.name}
-              phone={contact.phone}
+              phone={contact.number}
               index={++index}
             />
           ))}
-        </ol>
+        </StyledContactList>
       ) : (
         <h1>Sorry... No contacts found matching search criteria...</h1>
       )}
-    </>
+    </ContactContainer>
   );
 };
 

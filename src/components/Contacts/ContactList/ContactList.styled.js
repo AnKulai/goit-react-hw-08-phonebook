@@ -1,4 +1,13 @@
-.contactList {
+import styled from 'styled-components';
+
+export const ContactContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 60px auto;
+`;
+
+export const StyledContactList = styled.div`
   font-size: 24px;
   margin-top: 25px;
   margin-left: 30px;
@@ -9,7 +18,7 @@
   padding: 37px 52px 30px 100px;
   background-image: url(https://celes.club/uploads/posts/2022-05/1653499005_2-celes-club-p-fon-list-bumagi-v-kletku-krasivie-2.png);
   background-size: 100%;
-  margin-bottom: 60px;
+  // margin-bottom: 60px;
 
   & button {
     padding: 0 10px;
@@ -26,4 +35,4 @@
       background: #013b3b;
     }
   }
-}
+`;

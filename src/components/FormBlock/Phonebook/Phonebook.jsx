@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 
-import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import { IMaskInput } from 'react-imask';
 import css from './Phonebook.module.scss';
-import { addContact } from 'store/contactsReducer/contactsOperations';
+
 import { select } from 'store/selectors/selectors';
+import { addContact } from 'store/contactsReducer/contactsOperations';
+import { $privateHost } from 'service/hosts';
 
 const Phonebook = () => {
   const contacts = useSelector(select.contacts);
@@ -16,12 +17,12 @@ const Phonebook = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    console.log($privateHost.defaults.headers.Authorization);
     const newContact = {
-      id: nanoid(),
       name: inputNameRef.current.value,
-      phone: inputTelRef.current.value,
+      number: inputTelRef.current.value,
     };
-    if (!numberValidation(newContact.phone.length)) {
+    if (!numberValidation(newContact.number.length)) {
       Notify.failure('Enter full telephone number');
       return;
     }
